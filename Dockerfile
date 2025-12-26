@@ -1,5 +1,5 @@
 # Use Java 17 (recommended for Spring Boot)
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:25-jdk
 
 # Set working directory
 WORKDIR /app

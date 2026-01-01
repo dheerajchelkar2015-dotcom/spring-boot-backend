@@ -5,6 +5,7 @@ public class AppConstants {
         "/v3/api-docs/**",
         "/swagger-ui.html",
         "/swagger-ui/**",
-        "/api/v1/auth/**"
+        "/api/v1/auth/**",
+        "/uploads/**",
     };
 }

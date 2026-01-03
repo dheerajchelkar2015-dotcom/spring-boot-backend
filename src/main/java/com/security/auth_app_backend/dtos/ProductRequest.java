@@ -5,14 +5,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PlantRequest {
+public class ProductRequest {
 
     private String name;
+
     private String category;
+
     private String tag;
     private Integer price;
-    private String imageUrl;
+
     private Integer quantity;
 
+    private String imageUrl;
 }
-

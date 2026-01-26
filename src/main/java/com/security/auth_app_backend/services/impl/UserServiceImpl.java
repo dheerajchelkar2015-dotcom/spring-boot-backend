@@ -7,11 +7,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.security.auth_app_backend.config.AppConstants;
 import com.security.auth_app_backend.dtos.UserDto;
 import com.security.auth_app_backend.entities.Provider;
+import com.security.auth_app_backend.entities.Role;
 import com.security.auth_app_backend.entities.User;
 import com.security.auth_app_backend.exceptions.ResourceNotFoundException;
 import com.security.auth_app_backend.helpers.UserHelper;
+import com.security.auth_app_backend.repositories.RoleRepository;
 import com.security.auth_app_backend.repositories.UserRepository;
 import com.security.auth_app_backend.services.UserService;
 
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final RoleRepository roleRepository;
 
     @Override
     @Transactional
@@ -42,6 +46,8 @@ public class UserServiceImpl implements UserService{
 
         user.setProvider(userDto.getProvider()!=null ? userDto.getProvider():Provider.LOCAL);
         //role assign for authorization
+        Role role = roleRepository.findByName("ROLE_"+AppConstants.GUEST_ROLE).orElse(null);
+        user.getRoles().add(role);
         User savedUser = userRepository.save(user);
 
 

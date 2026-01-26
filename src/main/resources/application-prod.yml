@@ -33,6 +33,7 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - email
               - profile
@@ -42,14 +43,11 @@ file:
   upload-dir: uploads
 
 
-logging:
-  level:
-    org.springframework.security: DEBUG
 
 security:
   jwt:
-    secret: "${JWT_SECRET}"
-    issuer: ${JWT_ISSUER}
+    secret: "${JWT_SECRET:acabbcahcawudbahbwb@^@&Q&**HNNCJKCNKScnsnjecjsacabbcahcawudbahbwb@^@&Q&**HNNCJKCNKScnsnjecjs}"
+    issuer: ${JWT_ISSUER:api.substring.com}
     access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:3600}
     refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
     refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
@@ -61,8 +59,8 @@ security:
 
 app:
   cors:
-    front-end-url: http://localhost:5173
+    front-end-url: ${FRONT_END_URL:http://localhost:5173} 
   auth:
     frontend:
-      success-redirect: http://localhost:5173/oauth/success
-      failure-redirect: http://localhost:5173/oauth/failure
+      success-redirect: ${FRONT_END_SUCCESS_REDIRECT:http://localhost:5173/oauth/success}
+      failure-redirect: ${FRONT_END_FAILURE_REDIRECT:http://localhost:5173/oauth/failure}

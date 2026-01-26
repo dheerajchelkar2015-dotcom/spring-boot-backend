@@ -1,15 +1,31 @@
-FROM eclipse-temurin:17-jdk
+# =========================
+# 1️⃣ Build Stage
+# =========================
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y maven
-
+# Copy pom first for dependency caching
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
-COPY src src
+# Copy source code
+COPY src ./src
+
+# Build JAR
 RUN mvn clean package -DskipTests
+
+
+# =========================
+# 2️⃣ Run Stage
+# =========================
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "java -jar target/*.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
